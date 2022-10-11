@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.deser.std.DateDeserializers;
 import com.kainos.ea.ConnectionDB;
 import com.kainos.ea.dao.EmployeeDao;
 import com.kainos.ea.model.Employee;
+import com.kainos.ea.service.EmployeeService;
 import io.swagger.annotations.Api;
 
 import javax.ws.rs.*;
@@ -19,8 +20,8 @@ public class WebService {
     @Path("/employee")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllEmployees() throws SQLException {
-        EmployeeDao employeeDao = new EmployeeDao();
-        List<Employee> employees = employeeDao.selectAllEmployees(ConnectionDB.getConnection());
+        EmployeeService employeeService = new EmployeeService();
+        List<Employee> employees = employeeService.getAllEmployees();
 
         return Response
                 .status(Response.Status.OK)
@@ -32,8 +33,8 @@ public class WebService {
     @Path("/employee/{employeeID}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getEmployeeByID(@PathParam("employeeID") int employeeID) throws SQLException {
-        EmployeeDao employeeDao = new EmployeeDao();
-        Employee employee = employeeDao.selectEmployeeByID(employeeID, ConnectionDB.getConnection());
+        EmployeeService employeeService = new EmployeeService();
+        Employee employee = employeeService.getEmployeeByID(employeeID);
 
         return Response
                 .status(Response.Status.OK)
@@ -45,8 +46,8 @@ public class WebService {
     @Path("/employee/getByName/{employeeName}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getEmployeeByName(@PathParam("employeeName") String employeeName) throws SQLException {
-        EmployeeDao employeeDao = new EmployeeDao();
-        Employee employee = employeeDao.selectEmployeeByName(employeeName, ConnectionDB.getConnection());
+        EmployeeService employeeService = new EmployeeService();
+        Employee employee = employeeService.getEmployeeByName(employeeName);
 
         return Response
                 .status(Response.Status.OK)
